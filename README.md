@@ -1,28 +1,27 @@
 # demo-nestjs
 
-Updates
-Rename modules/core -> modules/base
-
-OVERVIEWS
-Controller
-Service
-Repository (TypeORM)
-Guards
-Interceptors
-Swagger
 
 
-
-**************************************************8
-- Base Module
-- Alternative key for common primary key between SQL table and NoSQL Collections
+## OVERVIEWS
++ Controller
++ Service
++ Repository (TypeORM)
++ Guards
++ Interceptors
++ Swagger
 
 
 
+## Applied code
++ Base Module
++ Alternative key for common primary key between SQL table and NoSQL Collections
 
-Issues:
-Error: dependency circulus
-import relative path instead of "from '.' "
+
+
+
+## Issues:
++ Error: dependency circulus
++ import relative path instead of "from '.' "
 
 https://stackoverflow.com/questions/72393168/in-the-next-major-version-nest-will-not-allow-classes-annotated-with-injectabl
 
@@ -40,7 +39,7 @@ https://stackoverflow.com/questions/53430373/how-to-get-properties-of-a-class-wi
 
 
 
-References:
+## References:
 
 https://stackoverflow.com/questions/41054507/postgresql-array-of-elements-that-each-are-a-foreign-key
 
