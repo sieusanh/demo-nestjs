@@ -1,7 +1,9 @@
 import { AccountDto, EmployeeDto } from 'src/modules/hr';
-import { IntersectionType, OmitType, PickType, PartialType } from '@nestjs/mapped-types';
+import { IntersectionType, OmitType } from '@nestjs/mapped-types';
+import { PartialType, PickType } from '@nestjs/swagger';
 
 export class SignInDto extends IntersectionType(
+    // @ApiProperty()
     PartialType(
         PickType(AccountDto, ['username', 'email'] as const)
     ), 

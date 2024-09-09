@@ -4,9 +4,10 @@ import { BaseController } from 'src/modules/base';
 import { AccountsService } from './accounts.service';
 import { AccountDto } from './accounts.dto';
 import { Account } from './accounts.entity';
-import { MODULE_ACCOUNT } from './accounts.constant';
+import { SWAGGER_TAG_ACCOUNT, MODULE_ACCOUNT } from './accounts.constant';
 
-@ApiTags(MODULE_ACCOUNT)
+
+@ApiTags(SWAGGER_TAG_ACCOUNT)
 @Controller(MODULE_ACCOUNT)
 export class AccountsController extends BaseController<AccountDto, Account> {
     constructor(

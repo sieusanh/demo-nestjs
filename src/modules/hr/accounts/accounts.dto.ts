@@ -6,26 +6,26 @@ import { ApiProperty } from '@nestjs/swagger';
 @Injectable()
 export class AccountDto extends BaseDto {
 
-    @IsString()
     @ApiProperty()
+    @IsString()
     username: string = '';
 
+    @ApiProperty()
     @IsString()
     @IsEmail()
-    @ApiProperty()
     email?: string = '';
 
+    @ApiProperty()
     @IsString()
     @IsNotEmpty()
-    @ApiProperty()
     password: string = '';
 
+    @ApiProperty()
     @IsString()
     @IsNotEmpty()
-    @ApiProperty()
     employeeId: string = '';
-
-    @IsDate()
+    
     @ApiProperty()
+    @IsDate()
     lastLoginAt?: Date = new Date();
 }

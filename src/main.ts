@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app';
+import { AppModule } from 'src/modules';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 // import { LoggerMiddleware } from './common/middlewares';
 // import * as cookieParser from 'cookie-parser';
@@ -14,10 +14,14 @@ async function bootstrap() {
         .setTitle('Demo NestJS')
         .setDescription('The APIs description')
         .setVersion('1.0')
-        .addTag('demo')
+        // .addTag('demo')
         .build();
     const document = SwaggerModule.createDocument(app, swaggerConfig);
-    SwaggerModule.setup('api', app, document);
+    SwaggerModule.setup('api', app, document, {
+        swaggerOptions: {
+            docExpansion: 'none'
+        }
+    });
 
     // app.use(() => {
     //   throw new NotFoundException('Route not found.');

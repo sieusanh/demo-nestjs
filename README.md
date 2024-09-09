@@ -22,6 +22,7 @@
 + Alternative key for common primary key between SQL table and NoSQL Collections
 
 ## Models. Please check file src/common/migrations/database.ts
+
 HR Account
 
 HR Employee

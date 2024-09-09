@@ -14,9 +14,9 @@ import { ValidationPipe } from 'src/common/pipe';
 import { Roles } from 'src/common';
 import { BaseController } from 'src/modules/base';
 import { TasksService, 
-    TaskDto, Task, MODULE_NAME } from '.';
+    TaskDto, Task, MODULE_NAME, SWAGGER_TAG_TASK } from '.';
 
-// @Global()
+@ApiTags(SWAGGER_TAG_TASK)
 @ApiTags(MODULE_NAME)
 @Controller(MODULE_NAME)
 export class TasksController extends BaseController<TaskDto, Task> {

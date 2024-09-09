@@ -4,10 +4,10 @@ import { BaseController } from 'src/modules/base';
 import { EmployeeDto } from './employees.dto';
 import { EmployeesService } from './employees.service';
 import { Employee } from './employees.entity';
-import { MODULE_EMPLOYEE } from './employees.constant';
+import { SWAGGER_TAG_EMPLOYEE, MODULE_EMPLOYEE } from './employees.constant';
 
 
-@ApiTags(MODULE_EMPLOYEE)
+@ApiTags(SWAGGER_TAG_EMPLOYEE)
 @Controller(MODULE_EMPLOYEE)
 export class EmployeesController extends BaseController<EmployeeDto, Employee> {
 

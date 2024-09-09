@@ -6,7 +6,6 @@ import { AccountsModule } from 'src/modules/hr/accounts/accounts.module';
 // import { AccountDto } from 'src/modules/hr/accounts/accounts.dto';e
 import { EmployeesModule } from 'src/modules/hr/employees/employees.module';
 import { AccountDto, Account, EmployeeDto, Employee } from 'src/modules/hr';
-
 import { JWT_SECRET } from './user.auth.constant';
 import { JwtModule } from '@nestjs/jwt';
 

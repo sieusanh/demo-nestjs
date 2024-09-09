@@ -29,8 +29,7 @@ export class UserAuthService {
         private jwtService: JwtService
     ) {}
 
-    async signIn(signInDto: SignInDto): Promise<AccessInfo> {
-        const { username, email, password: pass } = signInDto;
+    async signIn({username, email, password: pass}: SignInDto): Promise<AccessInfo> {
         // Account        
         const whereAccount: FindOptionsWhere<Account>[] = [
             ...(username ? [{ username }] : []),
@@ -38,14 +37,12 @@ export class UserAuthService {
         ];
         const account = await this.accountsService.findOne(whereAccount);
         if (!account) {
-            console.log('!acc')
             throw new UnauthorizedException();
         }
 
         const { username: accUsername, password = '', employeeId = '' } = account;
 
         if (password != pass) {
-            console.log('!pass')
             throw new UnauthorizedException();
         }
 

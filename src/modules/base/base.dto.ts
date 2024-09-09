@@ -1,32 +1,39 @@
 import { IsString, IsInt, IsDate, IsEnum, IsOptional } from 'class-validator';
 import { STATUS, Id } from 'src/common';
 import { BaseEntity } from './base.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class BaseDto {
     
     @IsString()
     @IsOptional()
+    @ApiProperty()
     id: Id = '';
     
     @IsInt()
     @IsOptional()
     @IsEnum(STATUS)
+    @ApiProperty()
     status: number = 1;
 
     @IsOptional()
     @IsDate()
+    @ApiProperty()
     createdAt: Date = new Date();
 
     @IsDate()
     @IsOptional()
+    @ApiProperty()
     updatedAt: Date = new Date();
 
     @IsString()
     @IsOptional()
+    @ApiProperty()
     createdBy: string = '';
 
     @IsString()
     @IsOptional()
+    @ApiProperty()
     updatedBy: string = '';
 
     // constructor(...fields: any[]) {
