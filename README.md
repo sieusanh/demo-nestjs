@@ -15,28 +15,32 @@
 + Interceptors
 + Swagger
 
+## Routes
+
 
 
 ## Applied code
-+ Base Module
++ Base Controller, Base Service, Base Dto, Base Entity
 + Alternative key for common primary key between SQL table and NoSQL Collections
+
 
 ## Models. Please check file src/common/migrations/database.ts
 
-HR Account
+## Modules              Routes                  Constraints
+HR Account              /hr/accounts
 
-HR Employee
+HR Employee             /hr/employees
 
-ERP Position
+ERP Position            /erp/positions
 
-ERP Department
+ERP Department          /erp/departments
 
-ERP Project
+ERP Project             /erp/projects
+
+ERP Tasks               /erp/tasks
+
 
 Relation Employee Project
-
-ERP Tasks
-
 
 
 ## Issues:

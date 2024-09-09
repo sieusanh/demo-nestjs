@@ -48,12 +48,12 @@ export class BaseDto {
         return properties;
     }
 
-    toEntity<Entity extends BaseEntity>(entity: Entity): Entity {
-        for (let idx of Object.keys(this)) {
-            entity[idx] = this[idx];
-            console.log('=======  this[idx] ',  this[idx])
+    createFromEntity<Entity extends BaseEntity>(entity: Entity) {
+        for (const key of Object.keys(entity)) {
+            this[key] = entity[key];
         }
 
-        return entity;
+        return this;
     }
+
 }   

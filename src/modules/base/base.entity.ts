@@ -50,10 +50,6 @@ export class BaseEntity implements ObjectLiteral {
     })
     updatedAt: Date;
 
-    convertDtoToEntity<Dto extends BaseDto>(dto: Dto) {
-        const entity: this = Object.assign(this, dto);
-        return entity;
-    }
 
     createFromDto<Dto extends BaseDto>(dto: Dto) {
         for (const key of Object.keys(dto)) {
@@ -62,14 +58,4 @@ export class BaseEntity implements ObjectLiteral {
 
         return this;
     }
-
-    toEntity<Entity extends BaseEntity>(entity: Entity): Entity {
-        for (let idx of Object.keys(this)) {
-            entity[idx] = this[idx];
-            console.log('=======  this[idx] ',  this[idx])
-        }
-
-        return entity;
-    }
-
 }

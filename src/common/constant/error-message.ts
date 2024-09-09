@@ -13,7 +13,8 @@ export enum ErrorMessage {
 
 export const enum HttpErrorMessage {
     CREATE = 'Create fail.',
-    RESOURCE_NOT_FOUND = 'RESOURCE_NOT_FOUND',
+    NOT_FOUND = 'NOT_FOUND',
     UPDATE = 'Update fail.',
     DELETE = 'Delete fail.',
+    UNAUTHORIZED = 'UNAUTHORIZED',
 }

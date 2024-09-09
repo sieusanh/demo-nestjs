@@ -3,7 +3,6 @@ import { IntersectionType, OmitType } from '@nestjs/mapped-types';
 import { PartialType, PickType } from '@nestjs/swagger';
 
 export class SignInDto extends IntersectionType(
-    // @ApiProperty()
     PartialType(
         PickType(AccountDto, ['username', 'email'] as const)
     ), 

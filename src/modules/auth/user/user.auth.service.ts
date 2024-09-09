@@ -30,77 +30,87 @@ export class UserAuthService {
     ) {}
 
     async signIn({username, email, password: pass}: SignInDto): Promise<AccessInfo> {
-        // Account        
-        const whereAccount: FindOptionsWhere<Account>[] = [
-            ...(username ? [{ username }] : []),
-            ...(email ? [{ email }] : [])
-        ];
-        const account = await this.accountsService.findOne(whereAccount);
-        if (!account) {
-            throw new UnauthorizedException();
-        }
+        try {
+            // Account        
+            const whereAccount: FindOptionsWhere<Account>[] = [
+                ...(username ? [{ username }] : []),
+                ...(email ? [{ email }] : [])
+            ];
+            const account = await this.accountsService.findOne(whereAccount);
+            if (!account) {
+                throw new UnauthorizedException();
+            }
 
-        const { username: accUsername, password = '', employeeId = '' } = account;
+            const { username: accUsername, password = '', employeeId = '' } = account;
 
-        if (password != pass) {
-            throw new UnauthorizedException();
-        }
+            if (password != pass) {
+                throw new UnauthorizedException();
+            }
 
-        // Employee
-        const whereEmployee: FindOptionsWhere<Employee> = {
-            id: employeeId
-        };
+            // Employee
+            const whereEmployee: FindOptionsWhere<Employee> = {
+                id: employeeId
+            };
 
-        const employee = await this.employeesService.findOne(whereEmployee);
-        if (!employee) {
-            throw new NotFoundException();
-        }
-        const { role, projectIds, departmentId } = employee;
+            const employee = await this.employeesService.findOne(whereEmployee);
+            if (!employee) {
+                throw new NotFoundException();
+            }
+            const { role, projectIds, departmentId } = employee;
 
-        // Generate access token
-        const jwtPayload: LoginInfos = {
-            username: accUsername, 
-            employeeId, role,
-            projectIds, 
-            departmentId
-        }
+            // Generate access token
+            const jwtPayload: LoginInfos = {
+                username: accUsername, 
+                employeeId, role,
+                projectIds, 
+                departmentId
+            }
 
-        const accessToken: string = await this.jwtService.signAsync(jwtPayload);
+            const accessToken: string = await this.jwtService.signAsync(jwtPayload);
 
-        return {
-            access_token: accessToken
+            return {
+                access_token: accessToken
+            }
+        } catch (err) {
+            throw err;
         }
     }
 
     async register(accountEntity: Account, employeeEntity: Employee): Promise<void> {
 
-        // Account
-        const { username, email, employeeId } = accountEntity;
+        try {
+            // Employee
+            const { phone, email } = employeeEntity;
+            const whereEmployee: FindOptionsWhere<Employee>[] = [
+                { phone },
+                { email }
+            ];
+            const employee = await this.employeesService.findOne(whereEmployee);
+            if (employee) {
+                throw new BadRequestException(`Employee ${ErrorMessage.EXISTED_POSTFIX}`);
+            }
 
-        const whereAccount: FindOptionsWhere<Account>[] = [
-            { username },
-            { email }, 
-            { employeeId } 
-        ];
-        const account = await this.accountsService.findOne(whereAccount);
+            const insertedEmployee = await this.employeesService.create(employeeEntity);
 
-        if (account) {
-            throw new BadRequestException(`Account ${ErrorMessage.EXISTED_POSTFIX}`);
+            // Account
+            const { username, employeeId } = accountEntity;
+
+            const whereAccount: FindOptionsWhere<Account>[] = [
+                { username },
+                { email }, 
+                { employeeId } 
+            ];
+            const account = await this.accountsService.findOne(whereAccount);
+            
+            if (account) {
+                throw new BadRequestException(`Account ${ErrorMessage.EXISTED_POSTFIX}`);
+            }
+            
+            accountEntity['employeeId'] = insertedEmployee?.id || '';
+            await this.accountsService.create(accountEntity);
+            
+        } catch (err) {
+            throw err;
         }
-
-        // Employee
-        const { phone } = employeeEntity;
-        const whereEmployee: FindOptionsWhere<Employee>[] = [
-            { phone },
-            { email }
-        ];
-        const employee = await this.employeesService.findOne(whereEmployee);
-        if (employee) {
-            throw new BadRequestException(`Employee ${ErrorMessage.EXISTED_POSTFIX}`);
-        }
-
-        const insertedEmployee = await this.employeesService.create(employeeEntity);
-        accountEntity['employeeId'] = insertedEmployee?.id || '';
-        await this.accountsService.create(accountEntity);
     }
 }

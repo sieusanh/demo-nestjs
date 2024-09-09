@@ -18,24 +18,22 @@ export class AccountsController extends BaseController<AccountDto, Account> {
         super(accountsService, accountDto, account);
     }   
     
-    // @Post()
-    // // @Header('Cache-Control', 'none')
-    // @HttpCode(HttpStatus.CREATED)
-    // create(
-    //     // @Body(new ValidationPipe()) createTaskDto: CreateTaskDto, 
-    //     @Body() createAccountDto: AccountDto,
+    @Post()
+    // @Header('Cache-Control', 'none')
+    @HttpCode(HttpStatus.CREATED)
+    create(
+        // @Body(new ValidationPipe()) createTaskDto: CreateTaskDto, 
+        @Body() createAccountDto: AccountDto,
 
-    //     @Res() res: Response
-    // ) {
-    //     try {
-    //         console.log('============= createAccountDto ', createAccountDto)
-    //         // const data = this.tasksService.create(createTaskDto);
-    //         // res.status(HttpStatus.CREATED).send();
-    //         res.status(HttpStatus.CREATED).json({result: 'haha'});
-    //     } catch (error) {
-    //         throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
-    //     }
-    // }
-//////
-    
+        @Res() res: Response
+    ) {
+        try {
+            console.log('============= createAccountDto ', createAccountDto)
+            // const data = this.tasksService.create(createTaskDto);
+            // res.status(HttpStatus.CREATED).send();
+            res.status(HttpStatus.CREATED).json({result: 'haha'});
+        } catch (error) {
+            throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+        }
+    }
 }

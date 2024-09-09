@@ -22,12 +22,16 @@ export class BaseService<Entity extends BaseEntity> {
     ) { }
 
     create(entity: Entity): Promise<Entity> {
-        const partialEntity: QueryDeepPartialEntity<Entity> = entity as QueryDeepPartialEntity<Entity>; 
-        const result = this.baseRepository.insert(partialEntity).then(res => res.raw[0]);
+        const partialEntity: QueryDeepPartialEntity<Entity> 
+            = entity as QueryDeepPartialEntity<Entity>; 
+        const result = this.baseRepository
+            .insert(partialEntity)
+            .then(res => res.raw[0])
+            .catch(err => err);
         return result;
     }
 
-    // async createMany(entities: Entity[]) {
+    // async createMany(entities: Entity[]): Promise<void> {
     //     const func = async function () {
     //         await this.queryRunnerFactory.save(entities[0]);
     //         await this.queryRunnerFactory.save(entities[1]);
@@ -36,15 +40,21 @@ export class BaseService<Entity extends BaseEntity> {
     // }
 
     findAll(criteria: FindManyOptions<Entity>): Promise<Entity[]> {
-        return this.baseRepository.find(criteria);
+        const result = this.baseRepository
+            .findAndCount(criteria)
+            .then(([data, count]) => [data, count])
+            .catch(err => err);
+        return result;
     }
 
     findOne(where: FindOptionsWhere<Entity> | FindOptionsWhere<Entity>[]): 
         Promise<Entity | null> {
-        const criteria: FindOneOptions<Entity> = {
-            where
-        };
-        return this.baseRepository.findOne(criteria);
+        const criteria: FindOneOptions<Entity> = { where };
+        const result = this.baseRepository
+            .findOne(criteria)
+            .then(res => res)
+            .catch(err => err);
+        return result;
     }   
 
     findById(id: Id): Promise<Entity | null> {
@@ -53,31 +63,55 @@ export class BaseService<Entity extends BaseEntity> {
               id,
             } as FindOptionsWhere<Entity>,
         };
-        return this.baseRepository.findOne(options);
+        const result = this.baseRepository
+            .findOne(options)
+            .then(res => res)
+            .catch(err => err);
+        return result;
     }
 
     update(
         criteria: FindOptionsWhere<Entity>, 
-        partialEntity: QueryDeepPartialEntity<Entity>
+        entity: Entity
     ): Promise<UpdateResult> {
-        return this.baseRepository.update(criteria, partialEntity); 
+        const partialEntity: QueryDeepPartialEntity<Entity> 
+            = entity as QueryDeepPartialEntity<Entity>; 
+
+        const result = this.baseRepository
+            .update(criteria, partialEntity)
+            .then(res => res)
+            .catch(err => err);
+        return result; 
     }
 
     updateById(
         id: Id, 
-        partialEntity: QueryDeepPartialEntity<Entity>
+        entity: Entity
     ): Promise<UpdateResult> {
         const where: FindOptionsWhere<Entity> = {
             id
         } as FindOptionsWhere<Entity>;
-        return this.baseRepository.update(where, partialEntity); 
+
+        const partialEntity: QueryDeepPartialEntity<Entity> 
+            = entity as QueryDeepPartialEntity<Entity>; 
+
+        const result = this.baseRepository
+            .update(where, partialEntity)
+            .then(res => res)
+            .catch(err => err);
+        return result; 
     }
 
     deleteById(id: Id): Promise<DeleteResult> {
         const where: FindOptionsWhere<Entity> = {
             id
         } as FindOptionsWhere<Entity>;
-        return this.baseRepository.delete(where);
+
+        const result = this.baseRepository
+            .delete(where)
+            .then(res => res)
+            .catch(err => err);
+        return result;
     }
 }
 
