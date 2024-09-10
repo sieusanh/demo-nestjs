@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { IsString, Matches, IsEnum, IsEmail, IsNumber, IsArray, IsOptional } from 'class-validator';
 import { BaseDto } from 'src/modules/base';
-import { Id } from 'src/common';
-import { GENDERS, ROLES } from 'src/common';
+import { Id, GENDERS, ROLES } from 'src/common';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Injectable()
@@ -48,7 +47,7 @@ export class EmployeeDto extends BaseDto {
     @IsString()
     @IsEnum(Object.values(ROLES))
     @IsOptional()
-    @ApiProperty()
+    @ApiProperty({ enum: Object.keys(ROLES) })
     role?: string = ROLES.MEMBER;
 
     @IsString()

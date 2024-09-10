@@ -51,7 +51,7 @@ const dataSource = {
     imports: [
         AccountsModule,
         EmployeesModule,
-        UserAuthModule,
+        // UserAuthModule,
         ConfigModule.forRoot({
             validate,
             envFilePath: '.development.env',

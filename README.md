@@ -22,11 +22,13 @@
 ## Applied code
 + Base Controller, Base Service, Base Dto, Base Entity
 + Alternative key for common primary key between SQL table and NoSQL Collections
++ RBAC 
++ Clean Code, Scalable code
 
 
 ## Models. Please check file src/common/migrations/database.ts
 
-## Modules              Routes                  Constraints
+## Modules              Endpoints                  Constraints
 HR Account              /hr/accounts
 
 HR Employee             /hr/employees

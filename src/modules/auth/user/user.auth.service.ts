@@ -29,52 +29,52 @@ export class UserAuthService {
         private jwtService: JwtService
     ) {}
 
-    async signIn({username, email, password: pass}: SignInDto): Promise<AccessInfo> {
-        try {
-            // Account        
-            const whereAccount: FindOptionsWhere<Account>[] = [
-                ...(username ? [{ username }] : []),
-                ...(email ? [{ email }] : [])
-            ];
-            const account = await this.accountsService.findOne(whereAccount);
-            if (!account) {
-                throw new UnauthorizedException();
-            }
+    // async signIn({username = '', email, password: pass}: SignInDto): Promise<AccessInfo> {
+    //     try {
+    //         // Account        
+    //         const whereAccount: FindOptionsWhere<Account>[] = [
+    //             ...(username ? [{ username }] : []),
+    //             ...(email ? [{ email }] : [])
+    //         ];
+    //         const account = await this.accountsService.findOne(whereAccount);
+    //         if (!account) {
+    //             throw new UnauthorizedException();
+    //         }
 
-            const { username: accUsername, password = '', employeeId = '' } = account;
+    //         const { username: accUsername, password = '', employeeId = '' } = account;
 
-            if (password != pass) {
-                throw new UnauthorizedException();
-            }
+    //         if (password != pass) {
+    //             throw new UnauthorizedException();
+    //         }
 
-            // Employee
-            const whereEmployee: FindOptionsWhere<Employee> = {
-                id: employeeId
-            };
+    //         // Employee
+    //         const whereEmployee: FindOptionsWhere<Employee> = {
+    //             id: employeeId
+    //         };
 
-            const employee = await this.employeesService.findOne(whereEmployee);
-            if (!employee) {
-                throw new NotFoundException();
-            }
-            const { role, projectIds, departmentId } = employee;
+    //         const employee = await this.employeesService.findOne(whereEmployee);
+    //         if (!employee) {
+    //             throw new NotFoundException();
+    //         }
+    //         const { role, projectIds, departmentId } = employee;
 
-            // Generate access token
-            const jwtPayload: LoginInfos = {
-                username: accUsername, 
-                employeeId, role,
-                projectIds, 
-                departmentId
-            }
+    //         // Generate access token
+    //         const jwtPayload: LoginInfos = {
+    //             username: accUsername, 
+    //             employeeId, role,
+    //             projectIds, 
+    //             departmentId
+    //         }
 
-            const accessToken: string = await this.jwtService.signAsync(jwtPayload);
+    //         const accessToken: string = await this.jwtService.signAsync(jwtPayload);
 
-            return {
-                access_token: accessToken
-            }
-        } catch (err) {
-            throw err;
-        }
-    }
+    //         return {
+    //             access_token: accessToken
+    //         }
+    //     } catch (err) {
+    //         throw err;
+    //     }
+    // }
 
     async register(accountEntity: Account, employeeEntity: Employee): Promise<void> {
 

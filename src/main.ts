@@ -9,6 +9,7 @@ import { ConfigService } from '@nestjs/config';
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
     // app.use(LoggerMiddleware);
+    app.setGlobalPrefix('api');
 
     const swaggerConfig = new DocumentBuilder()
         .setTitle('Demo NestJS')
@@ -18,7 +19,7 @@ async function bootstrap() {
         .build();
     const document = SwaggerModule.createDocument(app, swaggerConfig);
     SwaggerModule.setup('api', app, document, {
-        swaggerOptions: {
+        swaggerOptions: {   
             docExpansion: 'none'
         }
     });
@@ -34,8 +35,6 @@ async function bootstrap() {
             transform: true
         })
     );
-
-    app.setGlobalPrefix('api');
 
     process.on('unhandledRejection', (error, promise) => {
         throw error;

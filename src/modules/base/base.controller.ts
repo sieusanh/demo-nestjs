@@ -9,12 +9,18 @@ import {
 } from '@nestjs/common';
 import { Request, Response, response } from 'express';
 import { ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiHeader } from '@nestjs/swagger';
 import { Id, QueryParams, QueryParser, PathParams, HttpErrorMessage } from 'src/common';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { ValidationPipe } from 'src/common/pipe';
 import { Roles } from 'src/common';
 import { BaseDto, BaseEntity, BaseService, ModelMapper } from '.';
 
+
+@ApiHeader({
+    name: 'X-MyHeader',
+    description: 'Custom header'
+})
 export class BaseController<
     Dto extends BaseDto, 
     Entity extends BaseEntity
@@ -24,7 +30,7 @@ export class BaseController<
     constructor(
         private baseService: BaseService<Entity>,
         private baseDto: Dto,
-        private baseEntity: Entity,
+        private baseEntity: Entity
     ) {  
         this.queryParser = new QueryParser();
     }
@@ -40,7 +46,7 @@ export class BaseController<
         dto: Dto,
 
         // @Res() res: Response
-    ) {
+    ): Promise<Dto> {
         try {
             this.baseEntity.createFromDto(dto);
 
@@ -112,7 +118,8 @@ export class BaseController<
 
             const data = this.baseService.findById(id!);
 
-            res.status(HttpStatus.OK).json(data);
+            return data;
+
         } catch (error) {
             throw new HttpException(
                 HttpErrorMessage.NOT_FOUND, 

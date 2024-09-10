@@ -10,11 +10,11 @@ export class BaseDto {
     @ApiProperty()
     id: Id = '';
     
-    @IsInt()
-    @IsOptional()
-    @IsEnum(STATUS)
-    @ApiProperty()
-    status: number = 1;
+    // @IsInt()
+    // @IsOptional()
+    // @IsEnum(STATUS)
+    // @ApiProperty({ enum: Object.keys(STATUS) })
+    // status: number = 1;
 
     @IsOptional()
     @IsDate()
@@ -57,3 +57,4 @@ export class BaseDto {
     }
 
 }   
+
