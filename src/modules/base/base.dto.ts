@@ -3,11 +3,14 @@ import { STATUS, Id } from 'src/common';
 import { BaseEntity } from './base.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
+
 export class BaseDto {
     
     @IsString()
     @IsOptional()
-    @ApiProperty()
+    @ApiProperty({
+        type: 'string'
+    })
     id: Id = '';
     
     // @IsInt()

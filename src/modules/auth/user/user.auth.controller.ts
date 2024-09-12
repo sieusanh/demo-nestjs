@@ -4,13 +4,13 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBody, ApiQuery } from '@nestjs/swagger';
 import { UserAuthService } from './user.auth.service';
-import { SWAGGER_TAG_USER_AUTH, MODULE_USER_AUTH } from './user.auth.constant';
+import { SWAGGER_TAG_USER_AUTH } from './user.auth.constant';
 import { SignInDto, RegistryDto, AccessDto } from './user.auth.dto';
 import { AccountDto, Account, EmployeeDto, Employee } from 'src/modules/hr';
 import { HttpErrorMessage, ROLES } from 'src/common';
 
 @ApiTags(SWAGGER_TAG_USER_AUTH)
-@Controller(MODULE_USER_AUTH)
+@Controller()
 export class UserAuthController {   
     constructor(
         private userAuthService: UserAuthService,
@@ -68,5 +68,4 @@ export class UserAuthController {
             );
         }
     }
-
 }

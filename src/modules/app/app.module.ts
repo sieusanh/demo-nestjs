@@ -1,8 +1,9 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
-import { APP_FILTER, APP_PIPE, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_FILTER, APP_PIPE, APP_GUARD, APP_INTERCEPTOR, RouterModule, Routes } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AccountsModule, EmployeesModule } from 'src/modules/hr';
+import { UserAuthModule } from 'src/modules/auth';
 import { LoggerMiddleware } from 'src/common/middlewares';
 import * as cors from 'cors';
 import helmet from 'helmet';
@@ -17,7 +18,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { ApiConfigService } from 'src/config';
 
-import { UserAuthModule } from 'src/modules/auth';
+import { 
+    PATH_HR,
+    PATH_ACCOUNT_MODULE, 
+    PATH_EMPLOYEE_MODULE,
+    PATH_ERP,
+    PATH_AUTH,
+    PATH_USER_AUTH_MODULE
+
+} from './app.constant';
+
 
 const dataSource = {
     type: 'postgres',
@@ -45,12 +55,39 @@ const dataSource = {
 //         ? DevelopmentConfigService
 //         : ProductionConfigService,
 //   };
-  
+
+const routes: Routes = [
+    {
+        path: PATH_HR,
+        children: [
+            {
+                path: PATH_ACCOUNT_MODULE,
+                module: AccountsModule
+            },
+            {
+                path: PATH_EMPLOYEE_MODULE,
+                module: EmployeesModule
+            }
+        ]
+    }, 
+    {
+        path: PATH_AUTH,
+        children: [
+            {
+                path: PATH_USER_AUTH_MODULE,
+                module: UserAuthModule
+            }
+        ]
+    }
+];
 
 @Module({
     imports: [
         AccountsModule,
         EmployeesModule,
+        UserAuthModule,
+        RouterModule.register(routes),
+        // HrModule,
         // UserAuthModule,
         ConfigModule.forRoot({
             validate,
@@ -66,7 +103,9 @@ const dataSource = {
         TypeOrmModule.forRoot(dataSource),
 
     ],
-    controllers: [AppController],
+    controllers: [
+        AppController
+    ],
     providers: [
         // {
         //   provide: APP_FILTER,

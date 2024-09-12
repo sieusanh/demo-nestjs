@@ -1,15 +1,15 @@
-import { Controller, Post, HttpStatus, HttpCode, Body } from '@nestjs/common';
+import { Controller} from '@nestjs/common';
 import { BaseController } from 'src/modules/base';
 import { AccountsService } from './accounts.service';
 import { AccountDto } from './accounts.dto';
 import { Account } from './accounts.entity';
-import { SWAGGER_TAG_ACCOUNT, MODULE_ACCOUNT } from './accounts.constant';
-import { ApiTags, ApiHeader } from '@nestjs/swagger';
+import { SWAGGER_TAG_ACCOUNT } from './accounts.constant';
+import { ApiTags } from '@nestjs/swagger';
 
 
 
 @ApiTags(SWAGGER_TAG_ACCOUNT)
-@Controller(MODULE_ACCOUNT)
+@Controller()
 export class AccountsController extends BaseController<AccountDto, Account> {
     constructor(
         accountsService: AccountsService,
@@ -19,9 +19,4 @@ export class AccountsController extends BaseController<AccountDto, Account> {
         super(accountsService, accountDto, account);
     }   
 
-    @Post('test')
-    @HttpCode(HttpStatus.NO_CONTENT)
-    test(@Body() accountDto: AccountDto): string {
-        return 'This is test endpoint';
-    }
 }

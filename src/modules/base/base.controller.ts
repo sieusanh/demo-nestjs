@@ -8,19 +8,20 @@ import {
 
 } from '@nestjs/common';
 import { Request, Response, response } from 'express';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiOperation, ApiBody } from '@nestjs/swagger';
 import { ApiTags, ApiHeader } from '@nestjs/swagger';
 import { Id, QueryParams, QueryParser, PathParams, HttpErrorMessage } from 'src/common';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { ValidationPipe } from 'src/common/pipe';
 import { Roles } from 'src/common';
-import { BaseDto, BaseEntity, BaseService, ModelMapper } from '.';
-
+import { BaseDto, BaseEntity, BaseService } from '.';
 
 @ApiHeader({
     name: 'X-MyHeader',
     description: 'Custom header'
 })
+// @ApiTags()
+// @Controller()
 export class BaseController<
     Dto extends BaseDto, 
     Entity extends BaseEntity
@@ -40,9 +41,12 @@ export class BaseController<
     @HttpCode(HttpStatus.CREATED)
     // @Roles(['admin'])
     @ApiOperation({ summary: `Create` })
+    @ApiBody({
+        description: 'Dto'
+    }) 
     async create(
         // @Body(new ValidationPipe())
-        @Body() 
+        @Body()
         dto: Dto,
 
         // @Res() res: Response
@@ -80,8 +84,6 @@ export class BaseController<
 
             const result = this.baseService.findAll(parsedQuery);
 
-            // res.status(HttpStatus.OK).json(data);
-
             return result;
         } catch (err) {
             throw new HttpException(
@@ -114,7 +116,6 @@ export class BaseController<
     ) {
         try {
             const { id } = pathParams;
-            console.log('============= type id ', typeof id)
 
             const data = this.baseService.findById(id!);
 

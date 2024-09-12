@@ -15,7 +15,7 @@ import { Account } from './accounts.entity';
     providers: [
         AccountsService, 
         AccountDto, 
-        Account,
+        Account, 
         // EntityListenerFactory, QueryRunnerFactory
         // {
         //     provide: 'AccountDto',

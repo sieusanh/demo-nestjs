@@ -1,10 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from 'src/modules';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { SwaggerModule, DocumentBuilder, SwaggerDocumentOptions } from '@nestjs/swagger';
 // import { LoggerMiddleware } from './common/middlewares';
 // import * as cookieParser from 'cookie-parser';
 import { ValidationPipe } from 'src/common';
 import { ConfigService } from '@nestjs/config';
+import { AccountDto, EmployeeDto } from 'src/modules/hr';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -17,7 +18,11 @@ async function bootstrap() {
         .setVersion('1.0')
         // .addTag('demo')
         .build();
-    const document = SwaggerModule.createDocument(app, swaggerConfig);
+
+    const swaggerOptions: SwaggerDocumentOptions = {
+        extraModels: [AccountDto, EmployeeDto]
+    }
+    const document = SwaggerModule.createDocument(app, swaggerConfig, swaggerOptions);
     SwaggerModule.setup('api', app, document, {
         swaggerOptions: {   
             docExpansion: 'none'

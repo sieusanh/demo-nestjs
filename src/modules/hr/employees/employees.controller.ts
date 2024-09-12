@@ -8,7 +8,7 @@ import { SWAGGER_TAG_EMPLOYEE, MODULE_EMPLOYEE } from './employees.constant';
 
 
 @ApiTags(SWAGGER_TAG_EMPLOYEE)
-@Controller(MODULE_EMPLOYEE)
+@Controller()
 export class EmployeesController extends BaseController<EmployeeDto, Employee> {
 
     constructor(

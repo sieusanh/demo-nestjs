@@ -63,6 +63,9 @@ https://stackoverflow.com/questions/75057430/how-to-list-properties-of-a-nestjs-
 typescript get class properties with empty values
 https://stackoverflow.com/questions/53430373/how-to-get-properties-of-a-class-with-empty-constructor-using-typescript-in-the
 
+Swagger
+ApiExtraModels
+https://stackoverflow.com/questions/61143316/nestjs-swagger-what-model-is-the-apiextramodel-expecting-as-a-parameter
 
 
 ## References:
@@ -71,4 +74,5 @@ https://stackoverflow.com/questions/41054507/postgresql-array-of-elements-that-e
 
 Base Service
 https://stackoverflow.com/questions/51056158/nestjs-create-base-crud-service
+
 

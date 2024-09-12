@@ -17,5 +17,4 @@ export class AccountsService extends BaseService<Account> {
     isExistedEmail(email: string) {
         return false;
     }
-
 }
