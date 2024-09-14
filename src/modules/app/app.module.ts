@@ -7,7 +7,7 @@ import { UserAuthModule } from 'src/modules/auth';
 import { LoggerMiddleware } from 'src/common/middlewares';
 import * as cors from 'cors';
 import helmet from 'helmet';
-import { HttpExceptionFilter, AllExceptionsFilter } from 'src/common/exceptions';
+import { HttpExceptionFilter, AllExceptionsFilter } from 'src/common/exception';
 import { ValidationPipe, RolesGuard, LoggingInterceptor } from 'src/common';
 import { ConfigModule } from '@nestjs/config';
 import {

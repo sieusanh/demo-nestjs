@@ -3,8 +3,7 @@ import { Injectable, PipeTransform,
 } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
-import { ValidationPipeOptions } from './pipe.validation.options';
-import { STATUS } from 'src/common'
+import { ValidationPipeOptions } from './interface.pipe';
 
 // @Injectable()
 // export class ValidationPipe implements PipeTransform {

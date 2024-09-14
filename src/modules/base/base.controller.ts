@@ -1,20 +1,19 @@
 import {
-    Controller, Get, Post, Put, Delete,
+    Get, Post, Put, Delete,
     Body, Query,
     Req, Res,
     Header,
     HttpCode, HttpStatus, Param, Redirect,
     HttpException,
-
+    Inject
 } from '@nestjs/common';
-import { Request, Response, response } from 'express';
-import { ApiOperation, ApiBody } from '@nestjs/swagger';
-import { ApiTags, ApiHeader } from '@nestjs/swagger';
+import { Request, Response } from 'express';
+import { ApiOperation, ApiBody, ApiHeader, ApiOkResponse, getSchemaPath } from '@nestjs/swagger';
 import { Id, QueryParams, QueryParser, PathParams, HttpErrorMessage } from 'src/common';
-import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { ValidationPipe } from 'src/common/pipe';
-import { Roles } from 'src/common';
+import { RolesGuard } from 'src/common';
 import { BaseDto, BaseEntity, BaseService } from '.';
+import { BaseApiBody } from 'src/common/decorator';
 
 @ApiHeader({
     name: 'X-MyHeader',
@@ -27,23 +26,60 @@ export class BaseController<
     Entity extends BaseEntity
 > {
     private queryParser: QueryParser;
+    public apiBodyExample: Object;
 
     constructor(
         private baseService: BaseService<Entity>,
         private baseDto: Dto,
-        private baseEntity: Entity
+        private baseEntity: Entity,
+        apiBodyExample: Object
     ) {  
         this.queryParser = new QueryParser();
+        this.apiBodyExample = apiBodyExample;
+        console.log('============ kiki ', this?.['apiBodyExample']!)
     }
+
+    // setApiBodyExample(apiBodyExample: Object) {
+    //     console.log('=========== inside apiBodyExample ', apiBodyExample)
+    //     this.apiBodyExample = apiBodyExample;
+    //     console.log('=========== zzz apiBodyExample', this?.['apiBodyExample'])
+    // }
 
     @Post()
     // @Header('Cache-Control', 'none')
     @HttpCode(HttpStatus.CREATED)
-    // @Roles(['admin'])
+    // @RolesGuard(['admin'])
+
     @ApiOperation({ summary: `Create` })
+    // @ApiBody({
+    //     // a: {
+    //     //     description: 'Body Creating',
+    //     //     // examples: this?.['apiBodyExample'],
+    //     examples: {
+    //         a: {
+    //             value: {
+    //                 prop1: 'val1'
+    //             }
+                
+    //         }
+    //     }
+    // })
     @ApiBody({
-        description: 'Dto'
-    }) 
+        description: 'Body',
+        // examples: this?.['apiBodyExample'],
+        examples: {
+            // 'Case 1': {
+            //     value: {
+            //         prop1: 'val1',
+            //         prop2: 'val2'
+            //     }
+            // },
+            'Case 2': {
+                // value: getSchemaPath(this?.['apiBodyExample']!)
+                value: undefined
+            }
+        }
+    })
     async create(
         // @Body(new ValidationPipe())
         @Body()

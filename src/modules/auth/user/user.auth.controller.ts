@@ -2,24 +2,26 @@ import {
     Controller, Post, Body,
     HttpCode, HttpStatus, Inject, HttpException
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBody, ApiQuery } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBody, ApiQuery, getSchemaPath } from '@nestjs/swagger';
 import { UserAuthService } from './user.auth.service';
 import { SWAGGER_TAG_USER_AUTH } from './user.auth.constant';
 import { SignInDto, RegistryDto, AccessDto } from './user.auth.dto';
 import { AccountDto, Account, EmployeeDto, Employee } from 'src/modules/hr';
 import { HttpErrorMessage, ROLES } from 'src/common';
+import { BaseApiBody } from 'src/common/decorator';
 
 @ApiTags(SWAGGER_TAG_USER_AUTH)
 @Controller()
 export class UserAuthController {   
+
     constructor(
         private userAuthService: UserAuthService,
         @Inject('AccountDto') private accountDto: AccountDto,
         @Inject('AccountEntity') private accountEntity: Account,
         @Inject('EmployeeDto') private employeeDto: EmployeeDto,
         @Inject('EmployeeEntity') private employeeEntity: Employee,
-        
-    ) {}
+        @Inject('ApiBodyExample') protected apiBodyExample: Object
+    ) { } 
 
     @Post('login')
     @HttpCode(HttpStatus.OK)
@@ -46,9 +48,16 @@ export class UserAuthController {
         name: 'role', enum: ROLES, 
         // isArray: true 
     })
+    @ApiBody({
+        examples: this?.['apiBodyExample'],
+        schema: {
+            $ref: getSchemaPath(RegistryDto)
+        }
+    })
     async register(@Body() registryDto: RegistryDto): Promise<void> {
         try {
             // Account
+            console.log('=============== UserAuthController apiBodyExample ', this?.['apiBodyExample'])
             for (const key in this.accountDto) {
                 this.accountDto[key] = registryDto[key];
             }

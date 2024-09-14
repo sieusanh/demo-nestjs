@@ -11,10 +11,10 @@ import { Request, Response, response } from 'express';
 import { ApiTags } from '@nestjs/swagger';
 import { QueryParams } from 'src/common';
 import { ValidationPipe } from 'src/common/pipe';
-import { Roles } from 'src/common';
+import { RolesGuard } from 'src/common';
 import { BaseController } from 'src/modules/base';
 import { TasksService, 
-    TaskDto, Task, MODULE_NAME, SWAGGER_TAG_TASK } from '.';
+    TaskDto, Task, MODULE_NAME, SWAGGER_TAG_TASK, API_BODY_EXAMPLE } from '.';
 
 @ApiTags(SWAGGER_TAG_TASK)
 @ApiTags(MODULE_NAME)
@@ -26,13 +26,13 @@ export class TasksController extends BaseController<TaskDto, Task> {
         private taskDto: TaskDto, 
         private task: Task
     ) { 
-        super(tasksService, taskDto, task);
+        super(tasksService, taskDto, task, API_BODY_EXAMPLE);
     }
 
     // @Post()
     // // @Header('Cache-Control', 'none')
     // @HttpCode(HttpStatus.CREATED)
-    // @Roles(['admin'])
+    // @RolesGuard(['admin'])
     // create(
     //     // @Body(new ValidationPipe()) createTaskDto: CreateTaskDto, 
     //     @Body() createTaskDto: TaskDto,

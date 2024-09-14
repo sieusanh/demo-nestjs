@@ -5,6 +5,7 @@ import { AccountsService } from './accounts.service';
 import { AccountDto } from './accounts.dto';
 import { Account } from './accounts.entity';
 // import { EntityListenerFactory, QueryRunnerFactory } from 'src/common';
+import { API_BODY_EXAMPLE } from './accounts.constant';
 
 @Global()
 @Module({
@@ -20,6 +21,10 @@ import { Account } from './accounts.entity';
         // {
         //     provide: 'AccountDto',
         //     useClass: AccountDto
+        // },
+        // {
+        //     provide: 'ApiBodyExample',
+        //     useValue: API_BODY_EXAMPLE
         // }
     ],
     exports: [

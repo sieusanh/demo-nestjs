@@ -1,6 +1,6 @@
 import { Module, Global } from '@nestjs/common';
-import { EntityListenerService } from './factory.entity.listener';
-import { QueryRunnerService } from './factory.query.runner';
+import { EntityListenerService } from './entity-listener.factory';
+import { QueryRunnerService } from './query-runner.factory';
 
 @Global()
 @Module({

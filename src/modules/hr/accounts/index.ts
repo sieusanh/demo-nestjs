@@ -1,4 +1,3 @@
-export * from './accounts.constant';
 export * from './accounts.controller';
 export * from './accounts.dto';
 export * from './accounts.entity';

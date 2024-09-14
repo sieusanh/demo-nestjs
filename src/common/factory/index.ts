@@ -1,5 +1,5 @@
 
-export * from './factory.entity.listener';
-export * from './factory.query.runner';
+export * from './entity-listener.factory';
+export * from './query-runner.factory';
 // export * from './factory.model.mapper';
-export * from './factory.module';
+export * from './module.factory';

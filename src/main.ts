@@ -6,6 +6,7 @@ import { SwaggerModule, DocumentBuilder, SwaggerDocumentOptions } from '@nestjs/
 import { ValidationPipe } from 'src/common';
 import { ConfigService } from '@nestjs/config';
 import { AccountDto, EmployeeDto } from 'src/modules/hr';
+import { QueryParams } from 'src/common/http';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -13,6 +14,7 @@ async function bootstrap() {
     app.setGlobalPrefix('api');
 
     const swaggerConfig = new DocumentBuilder()
+        .addBearerAuth()
         .setTitle('Demo NestJS')
         .setDescription('The APIs description')
         .setVersion('1.0')
@@ -20,7 +22,7 @@ async function bootstrap() {
         .build();
 
     const swaggerOptions: SwaggerDocumentOptions = {
-        extraModels: [AccountDto, EmployeeDto]
+        extraModels: [QueryParams, AccountDto, EmployeeDto]
     }
     const document = SwaggerModule.createDocument(app, swaggerConfig, swaggerOptions);
     SwaggerModule.setup('api', app, document, {
