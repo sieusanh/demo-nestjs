@@ -10,6 +10,6 @@ export const databaseConfig = registerAs('database', async () => {
 
     return {
         host: process.env.DATABASE_HOST,
-        port: process.env.DATABASE_PORT || 5432
+        port: parseInt(process.env.DATABASE_PORT!) || 5432
     }
 });

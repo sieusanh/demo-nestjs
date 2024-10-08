@@ -2,8 +2,10 @@ import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { APP_FILTER, APP_PIPE, APP_GUARD, APP_INTERCEPTOR, RouterModule, Routes } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AccountsModule, EmployeesModule } from 'src/modules/hr';
 import { UserAuthModule } from 'src/modules/auth';
+import { AccountsModule, EmployeesModule } from 'src/modules/hr';
+import { DepartmentsModule, PositionsModule, 
+    ProjectsModule, TasksModule } from 'src/modules/erp';
 import { LoggerMiddleware } from 'src/common/middlewares';
 import * as cors from 'cors';
 import helmet from 'helmet';
@@ -19,12 +21,19 @@ import { DataSource } from 'typeorm';
 import { ApiConfigService } from 'src/config';
 
 import { 
-    PATH_HR,
-    PATH_ACCOUNT_MODULE, 
-    PATH_EMPLOYEE_MODULE,
-    PATH_ERP,
+
     PATH_AUTH,
-    PATH_USER_AUTH_MODULE
+    PATH_USER_AUTH,
+
+    PATH_HR,
+    PATH_ACCOUNT, 
+    PATH_EMPLOYEE,
+
+    PATH_ERP,
+    PATH_DEPARTMENT,
+    PATH_POSITION,
+    PATH_PROJECT,
+    PATH_TASK,
 
 } from './app.constant';
 
@@ -57,24 +66,45 @@ const dataSource = {
 
 const routes: Routes = [
     {
+        path: PATH_AUTH,
+        children: [
+            {
+                path: PATH_USER_AUTH,
+                module: UserAuthModule
+            }
+        ]
+    },
+    {
         path: PATH_HR,
         children: [
             {
-                path: PATH_ACCOUNT_MODULE,
+                path: PATH_ACCOUNT,
                 module: AccountsModule
             },
             {
-                path: PATH_EMPLOYEE_MODULE,
+                path: PATH_EMPLOYEE,
                 module: EmployeesModule
             }
         ]
     }, 
     {
-        path: PATH_AUTH,
+        path: PATH_ERP,
         children: [
             {
-                path: PATH_USER_AUTH_MODULE,
-                module: UserAuthModule
+                path: PATH_DEPARTMENT,
+                module: DepartmentsModule
+            },
+            {
+                path: PATH_POSITION,
+                module: PositionsModule
+            },
+            {
+                path: PATH_PROJECT,
+                module: ProjectsModule
+            },
+            {
+                path: PATH_TASK,
+                module: TasksModule
             }
         ]
     }

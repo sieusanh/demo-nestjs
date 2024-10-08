@@ -1,4 +1,4 @@
-import { Module, Global } from '@nestjs/common';
+import { Module, Global, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AccountsController } from './accounts.controller';
 import { AccountsService } from './accounts.service';
@@ -10,7 +10,9 @@ import { API_BODY_EXAMPLE } from './accounts.constant';
 @Global()
 @Module({
     imports: [
+        // forwardRef(() => 
         TypeOrmModule.forFeature([Account])
+        // )
     ],
     controllers: [AccountsController],
     providers: [
@@ -29,8 +31,9 @@ import { API_BODY_EXAMPLE } from './accounts.constant';
     ],
     exports: [
         AccountsService,
-        AccountDto, Account,
-        TypeOrmModule,
+        AccountDto, 
+        Account,
+        // TypeOrmModule,
     ]
 })
 export class AccountsModule {}

@@ -47,11 +47,11 @@ export class BaseService<Entity extends BaseEntity> {
         return result;
     }
 
-    findOne(where: FindOptionsWhere<Entity> | FindOptionsWhere<Entity>[]): 
+    findOne(options: FindOneOptions<Entity>): 
         Promise<Entity | null> {
-        const criteria: FindOneOptions<Entity> = { where };
+        // const criteria: FindOneOptions<Entity> = { where };
         const result = this.baseRepository
-            .findOne(criteria)
+            .findOne(options)
             .then(res => res)
             .catch(err => err);
         return result;

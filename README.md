@@ -44,6 +44,8 @@ Relation Employee Project
 + Error: dependency circulus
 + import relative path instead of "from '.' "
 
+https://wanago.io/2022/02/28/api-nestjs-circular-dependencies/
+
 https://stackoverflow.com/questions/72393168/in-the-next-major-version-nest-will-not-allow-classes-annotated-with-injectabl
 
 

@@ -43,7 +43,7 @@ export class UserAuthController {
  
     @Post('register')
     @HttpCode(HttpStatus.NO_CONTENT)
-    @ApiOperation({ summary: 'Account Registration' })
+    @ApiOperation({ summary: 'User account registration' })
     @ApiQuery({ 
         name: 'role', enum: ROLES, 
         // isArray: true 

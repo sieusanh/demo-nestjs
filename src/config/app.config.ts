@@ -6,6 +6,6 @@ export const appConfig = registerAs('app', async () => {
 
     return {
         host: process.env.APP_HOST || 'localhost',
-        port: process.env.APP_PORT || 3000
+        port: parseInt(process.env.APP_PORT!, 10) || 3000
     }
 });

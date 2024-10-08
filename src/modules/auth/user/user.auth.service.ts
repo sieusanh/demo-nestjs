@@ -5,7 +5,7 @@ import { AccountsService } from 'src/modules/hr/accounts/accounts.service';
 import { Account } from 'src/modules/hr/accounts/accounts.entity';
 import { EmployeesService } from 'src/modules/hr/employees/employees.service';
 import { Employee } from 'src/modules/hr/employees/employees.entity';
-import { FindOptionsWhere } from 'typeorm';
+import { FindOptionsWhere, FindOneOptions } from 'typeorm';
 import { Id, ErrorMessage } from 'src/common';
 import { SignInDto } from './user.auth.dto';
 
@@ -85,7 +85,9 @@ export class UserAuthService {
                 { phone },
                 { email }
             ];
-            const employee = await this.employeesService.findOne(whereEmployee);
+            const findEmployeeOptions: FindOneOptions<Employee> = { where: whereEmployee };
+
+            const employee = await this.employeesService.findOne(findEmployeeOptions);
             if (employee) {
                 throw new BadRequestException(`Employee ${ErrorMessage.EXISTED_POSTFIX}`);
             }
@@ -100,7 +102,8 @@ export class UserAuthService {
                 { email }, 
                 { employeeId } 
             ];
-            const account = await this.accountsService.findOne(whereAccount);
+            const findAccountOptions: FindOneOptions<Account> = { where: whereAccount };
+            const account = await this.accountsService.findOne(findAccountOptions);
             
             if (account) {
                 throw new BadRequestException(`Account ${ErrorMessage.EXISTED_POSTFIX}`);
