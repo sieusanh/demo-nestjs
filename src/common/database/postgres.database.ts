@@ -1,3 +1,4 @@
+import { DataSource } from 'typeorm';
 
 export class PostgresClient {
     constructor() {}
@@ -6,3 +7,4 @@ export class PostgresClient {
 
     disconnect() {}
 }
+

@@ -60,9 +60,11 @@ async function bootstrap() {
 
     // app.use(cookieParser());
 
-    const configService = app.get(ConfigService);
-    const port = configService.get('PORT');
-    await app.listen(port).catch(err => {
+    const configService = app.get(ConfigService);   
+    const appConfig = configService.get('app');
+    const appPort = appConfig?.port;
+
+    await app.listen(appPort).catch(err => {
         console.log('Server Error: ', err);
     });
 }

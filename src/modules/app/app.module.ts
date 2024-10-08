@@ -12,7 +12,7 @@ import { ValidationPipe, RolesGuard, LoggingInterceptor } from 'src/common';
 import { ConfigModule } from '@nestjs/config';
 import {
     // configuration, 
-    databaseConfig, validate
+    appConfig, databaseConfig, validate
 } from 'src/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
@@ -27,7 +27,6 @@ import {
     PATH_USER_AUTH_MODULE
 
 } from './app.constant';
-
 
 const dataSource = {
     type: 'postgres',
@@ -97,7 +96,7 @@ const routes: Routes = [
             // ignoreEnvFile: true,
             // isGlobal: true,
             // load: [configuration]
-            load: [databaseConfig],
+            load: [appConfig, databaseConfig],
             cache: true
         }),
         TypeOrmModule.forRoot(dataSource),

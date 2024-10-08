@@ -11,15 +11,3 @@ export function BaseApiBody({ description, examples }: ApiBodyObj) {
         })
     );
 }
-
-
-
-function printType<Type>(input: Type): string {
-    const result: string = 'Result: ' + input;
-    return result;
-}
-
-const result: string = printType(123);
-
-console.log({ result })
-

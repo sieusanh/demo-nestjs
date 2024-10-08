@@ -1,9 +1,5 @@
 # demo-nestjs
 
-
-
-
-
 ## OVERVIEWS
 + Controller
 + Service
@@ -16,7 +12,6 @@
 + Swagger
 
 ## Routes
-
 
 
 ## Applied code
